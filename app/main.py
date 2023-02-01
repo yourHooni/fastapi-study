@@ -3,6 +3,7 @@ from typing import Optional
 
 from fastapi import FastAPI, BackgroundTasks
 
+from app.middlewares import http_middleware_handler
 from app.middlewares.http_middleware_handler_base_http_middleware import BaseHTTPMiddleware
 from app.middlewares.http_middleware_handler_base_http_middleware_origin \
     import BaseHTTPMiddleware as BaseHTTPMiddlewareOrigin
@@ -26,7 +27,9 @@ from app.middlewares.http_middleware_handler_base_http_middleware_origin \
 
 app = FastAPI()
 
-app.add_middleware(BaseHTTPMiddleware)
+app.add_middleware(http_middleware_handler.CustomHttpMiddleware)
+app.add_middleware(http_middleware_handler.CustomHttpMiddleware2)
+# app.add_middleware(BaseHTTPMiddleware)
 # app.add_middleware(BaseHTTPMiddlewareOrigin)
 
 #############################################################
@@ -47,6 +50,7 @@ def background_task_test():
 
 @app.get("/")
 def read_root(background_tasks: BackgroundTasks):
+    print("read root")
     background_tasks.add_task(background_task_test)
     return {"Hello": "World"}
 

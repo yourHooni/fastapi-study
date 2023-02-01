@@ -109,6 +109,7 @@ class BaseHTTPMiddleware:
         async with anyio.create_task_group() as task_group:
             request = Request(scope, receive=receive)
             response = await self.dispatch_func(request, call_next)
+            print(response.headers)
             await response(scope, receive, send)
             response_sent.set()
 
