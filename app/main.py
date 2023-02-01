@@ -1,6 +1,11 @@
+import time
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
+
+from app.middlewares.http_middleware_handler_base_http_middleware import BaseHTTPMiddleware
+from app.middlewares.http_middleware_handler_base_http_middleware_origin \
+    import BaseHTTPMiddleware as BaseHTTPMiddlewareOrigin
 
 
 #############################################################
@@ -21,6 +26,8 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+app.add_middleware(BaseHTTPMiddleware)
+# app.add_middleware(BaseHTTPMiddlewareOrigin)
 
 #############################################################
 
@@ -33,9 +40,15 @@ app = FastAPI()
 #############################################################
 # Set API
 
+def background_task_test():
+    time.sleep(5)
+    print("background_task_test")
+
+
 @app.get("/")
-def read_root():
-    return {"Hello": "World55"}
+def read_root(background_tasks: BackgroundTasks):
+    background_tasks.add_task(background_task_test)
+    return {"Hello": "World"}
 
 
 @app.get("/items/{item_id}")
