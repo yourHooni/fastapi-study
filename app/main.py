@@ -7,6 +7,7 @@ from app.middlewares import http_middleware_handler
 from app.middlewares.http_middleware_handler_base_http_middleware import BaseHTTPMiddleware
 from app.middlewares.http_middleware_handler_base_http_middleware_origin \
     import BaseHTTPMiddleware as BaseHTTPMiddlewareOrigin
+from app.common.settings import settings
 
 
 #############################################################
@@ -63,4 +64,12 @@ async def read_item(item_id: int, q: Optional[str] = None):
 @app.get("/test")
 def test_api():
     return {"Test": "This is Test"}
+
+@app.get("/app_info")
+def get_app_info():
+    return {
+        "app_name": settings.app_name,
+        "app_version": settings.app_version,
+        "app_env": settings.app_env
+    }
 #############################################################
