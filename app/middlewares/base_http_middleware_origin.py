@@ -82,7 +82,7 @@ class BaseHTTPMiddleware:
         self, request: Request, call_next: RequestResponseEndpoint
     ) -> Response:
         response = await call_next(request)
-        response.headers['Custom'] = 'Example'
+        response.headers["Custom"] = "Example"
         print("return in origin response")
         return response
         # raise NotImplementedError()  # pragma: no cover

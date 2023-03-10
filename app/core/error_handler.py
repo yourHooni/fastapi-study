@@ -13,7 +13,7 @@ class ErrorCodeHandler:
             host=settings.redis_host,
             db=5,
             username=settings.redis_username,
-            password=settings.redis_password
+            password=settings.redis_password,
         )
 
     def get_error_code_with_code(self, code: Union[str, int]):
@@ -21,5 +21,6 @@ class ErrorCodeHandler:
 
     def get_error_code_with_str_code(self, code: str):
         return self._code_redis.get_one("error_code_str", code)
+
 
 error_handler = ErrorCodeHandler()

@@ -13,12 +13,14 @@ from app.middlewares.base_http_middleware import BaseHTTPMiddleware
 from app.common.mongodb import MongoHandler
 from app.core.exception_handler import CustomException
 
+
 class AsyncIteratorWrapper:
     """
-        iterator to async iterator
-        비동기 처리는 여러 개의 작업을 동시에 처리할 수 있어 처리 속도가 향상된다.
-        https://www.python.org/dev/peps/pep-0492/#example-2
+    iterator to async iterator
+    비동기 처리는 여러 개의 작업을 동시에 처리할 수 있어 처리 속도가 향상된다.
+    https://www.python.org/dev/peps/pep-0492/#example-2
     """
+
     def __init__(self, obj):
         self._it = iter(obj)
 
@@ -32,12 +34,15 @@ class AsyncIteratorWrapper:
             raise StopAsyncIteration
         return value
 
+
 class RequestLoggingMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: FastAPI):
         super().__init__(app)
         self._logdb = MongoHandler(database_name="logdb", collection_name="api_log")
 
-    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+    async def dispatch(
+        self, request: Request, call_next: RequestResponseEndpoint
+    ) -> Response:
         # TODO: 외부 api 호출 로그도 관리하려면 해당 request의 id를 가지고 있어야 좋을것 같음
         # 하지만, 현재 로직상 request_id가 mongodb에 적재시 생성되므로 어떻게 할지 고민 필요
         # 방안 1. uuid로 request_id 생성해서 관리 -> uuid는 유니크 하지 않음
@@ -57,7 +62,9 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         try:
             response: Response = await call_next(request)
             resp_status_code = response.status_code
-            resp_body = [section async for section in response.__dict__["body_iterator"]]
+            resp_body = [
+                section async for section in response.__dict__["body_iterator"]
+            ]
             response.__setattr__("body_iterator", AsyncIteratorWrapper(resp_body))
 
             try:
@@ -69,7 +76,11 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
             is_success = False
             resp_body = str(e)
             resp_status_code = e.status_code.value
-            response = Response(status_code=resp_status_code, content=e.to_json(), media_type="application/json")
+            response = Response(
+                status_code=resp_status_code,
+                content=e.to_json(),
+                media_type="application/json",
+            )
 
         end_time = time.perf_counter()
 
@@ -83,7 +94,7 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
             "status": is_success,
             "status_code": resp_status_code,
             "elapsed_time": f"{(end_time - start_time):.4f}",
-            "response_body": resp_body
+            "response_body": resp_body,
         }
 
         self._logdb.insert_one(logging_dict)
@@ -149,5 +160,3 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
     #         #         "detail": e
     #         #     }
     #         # )
-
-
