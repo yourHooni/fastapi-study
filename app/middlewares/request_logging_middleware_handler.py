@@ -10,8 +10,8 @@ from starlette.middleware.base import RequestResponseEndpoint
 from fastapi import FastAPI, Request, Response
 
 from app.middlewares.base_http_middleware import BaseHTTPMiddleware
-from app.common.mongodb import MongoHandler
-from app.core.exception_handler import CustomException
+from app.core.mongodb import MongoHandler
+from app.core.custom_exception import CustomException
 
 
 class AsyncIteratorWrapper:
@@ -72,7 +72,6 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
             except Exception:
                 resp_body = str(resp_body)
         except CustomException as e:
-            # TODO: error handling (with standard error code)
             is_success = False
             resp_body = str(e)
             resp_status_code = e.status_code.value

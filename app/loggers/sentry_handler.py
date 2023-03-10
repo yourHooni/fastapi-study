@@ -3,7 +3,7 @@ from sentry_sdk.integrations.fastapi import FastApiIntegration
 from sentry_sdk.integrations.pymongo import PyMongoIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 
-from app.common.settings import settings
+from app.constants.settings import settings
 
 def init_sentry():
     sentry_sdk.init(

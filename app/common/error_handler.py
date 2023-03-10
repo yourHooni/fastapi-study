@@ -3,8 +3,8 @@
 """
 from typing import Union
 
-from app.common.redis_handler import RedisHandler
-from app.common.settings import settings
+from app.core.redis import RedisHandler
+from app.constants.settings import settings
 
 
 class ErrorCodeHandler:

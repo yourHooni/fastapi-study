@@ -31,4 +31,3 @@ class CustomEnum(Enum):
 class Test(CustomEnum):
     A = "a"
     B = "b"
-

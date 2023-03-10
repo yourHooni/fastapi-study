@@ -13,10 +13,16 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 
-from app.common.settings import settings
-from app.loggers import sentry_handler
+from app.constants.settings import settings
 
 
+# from app.main import conf
+# from app.main import conf
+# from app import con
+# from app.common.configs import setting
+
+
+# class MongoHandler(logging.Handler):
 class MongoHandler:
     def __init__(self, database_name: Union[str, None] = None, collection_name: Union[str, None] = None):
         """
@@ -76,7 +82,7 @@ class MongoHandler:
                 host=host,
                 port=port,
                 username=username,
-                password=password,
+                password=password
             )
 
             if not bool(self._client.server_info()):
@@ -157,3 +163,4 @@ class MongoHandler:
 
 
 
+# mongodb = MongoHandler(database_name=settings.mongodb_db_name)

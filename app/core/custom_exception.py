@@ -4,7 +4,7 @@
 import json
 from typing import Union
 
-from app.core.error_handler import error_handler
+from app.common.error_handler import error_handler
 from app.constants.response import StatusCode, ExceptionCode, ErrorCode
 
 

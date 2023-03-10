@@ -8,10 +8,10 @@ from app.middlewares.http_middleware_handler_base_http_middleware import BaseHTT
 from app.middlewares.http_middleware_handler_base_http_middleware_origin \
     import BaseHTTPMiddleware as BaseHTTPMiddlewareOrigin
 from app.middlewares.request_logging_middleware_handler import RequestLoggingMiddleware
-from app.common.settings import settings
+from app.constants.settings import settings
 from app.loggers import sentry_handler
 from app.constants.response import ExceptionCode
-from app.core.exception_handler import CustomException
+from app.core.custom_exception import CustomException
 
 
 #############################################################

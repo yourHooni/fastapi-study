@@ -6,7 +6,6 @@ import sentry_sdk
 import redis
 from typing import Union, List
 
-from app.common.settings import settings
 
 class RedisHandler:
     def __init__(self, host: str, db: int, username: str, password: str):
@@ -58,8 +57,6 @@ class RedisHandler:
                 encoding="utf-8",
                 ssl=True,
                 decode_responses=True,
-                health_check_interval=15,
-                socket_keepalive=True,
                 username=username,
                 password=password
             )
@@ -96,4 +93,15 @@ class RedisHandler:
                 sentry_sdk.capture_exception(e)
                 return None
         return data
+
+    # def get_all_dict(self, name: str) -> List:
+    #     data = self._client.hgetall("error_code_str")
+    #     if isinstance(data, dict):
+    #         return data
+    #     else:
+    #         # TODO: type이 다른 경우 처리 방법 구현
+    #         return {}
+    #
+
+    # def get(self, key: str) -> Union[str, None]:
 
