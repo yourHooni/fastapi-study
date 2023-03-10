@@ -20,11 +20,15 @@ class CustomEnum(Enum):
         """check is equal with other value"""
         if isinstance(other, CustomEnum):
             return self is other
-        elif self.value == other:
+        if self.value == other:
             return True
         return False
+
+    def __str__(self) -> str:
+        return str(self.value)
 
 
 class Test(CustomEnum):
     A = "a"
     B = "b"
+
