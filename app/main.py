@@ -8,6 +8,7 @@ from app.middlewares.http_middleware_handler_base_http_middleware import BaseHTT
 from app.middlewares.http_middleware_handler_base_http_middleware_origin \
     import BaseHTTPMiddleware as BaseHTTPMiddlewareOrigin
 from app.common.settings import settings
+from app.loggers import sentry_handler
 
 
 #############################################################
@@ -30,6 +31,8 @@ app = FastAPI()
 
 app.add_middleware(http_middleware_handler.CustomHttpMiddleware)
 app.add_middleware(http_middleware_handler.CustomHttpMiddleware2)
+# set logger
+sentry_handler.init_sentry()
 # app.add_middleware(BaseHTTPMiddleware)
 # app.add_middleware(BaseHTTPMiddlewareOrigin)
 

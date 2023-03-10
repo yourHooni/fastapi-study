@@ -32,11 +32,21 @@ class Settings(BaseSettings):
     mongodb_port: int = 27017
     mongodb_username: str = "root"
     mongodb_password: str = "root"
+    mongodb_log_db_name: str = "logdb"
+    mongodb_db_name: str = "devdb"
+
+    # redis settings
+    redis_host: str = "localhost"
+    redis_username: str = "root"
+    redis_password: str = "root"
+
+    # logger settings
+    sentry_dsn: str = ""
 
     class Config:
         env_file = [
             f"{parent_path}/.env/{file_name}"
-            for file_name in ["app.env", "mongodb.env"]
+            for file_name in ["app.env", "mongodb.env", "redis.env", "logger.env"]
         ]
 
     def __post_init__(self):
