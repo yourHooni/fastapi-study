@@ -80,6 +80,3 @@ class CustomAPIRoute(APIRoute):
 
 
         return custom_route_handler
-
-# router = APIRouter(route_class=CustomAPIRoute)
-

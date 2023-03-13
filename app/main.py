@@ -13,6 +13,7 @@ from app.loggers import sentry_handler
 from app.constants.response import ExceptionCode
 from app.core.custom_exception import CustomException
 from app.core.route_handler import CustomAPIRoute
+from app.api.v1.router import router as v1_router
 
 
 #############################################################
@@ -29,24 +30,61 @@ from app.core.route_handler import CustomAPIRoute
 #############################################################
 
 #############################################################
+# swagger configuration
+swagger_config = {
+    'displayRequestDuration': True,
+    'docExpansion': 'none',
+    'defaultModelExpandDepth': 0
+}
+
 # Set App
 
 # initialize app
 def get_application() -> FastAPI:
-    application = FastAPI()
+    # Set application
+    application = FastAPI(
+        title=f"{settings.app_name}: {settings.app_env}",
+        version=settings.app_version,
+        description="<a href='/apis/v1/docs'>API v1.0</a>",
+        docs_url=settings.app_docs_url,
+        redoc_url=settings.app_redoc_url,
+        # contact={
+        #     "name": settings.app_manager_name,
+        #     "email": settings.app_manager_email,
+        #     "url": settings.app_contact_url
+        # },
+        swagger_ui_parameters=swagger_config,
+        debug=settings.app_debug
+    )
+
+    # Set sub applications
+    sub_application_v1 = FastAPI(
+        title=f"{settings.app_name} v1: {settings.app_env}",
+        version=settings.app_version,
+        description=""
+    )
+    sub_application_v1.include_router(v1_router)
+
+    application.mount("/apis/v1", sub_application_v1)
+
+    # set logger
+    sentry_handler.init_sentry()
+
     return application
 
 app = get_application()
 
-app.add_middleware(http_middleware_handler.CustomHttpMiddleware)
-app.add_middleware(http_middleware_handler.CustomHttpMiddleware2)
-# set logger
-sentry_handler.init_sentry()
+
+# print(mongodb)
+
+# set configs
+# app.add_middleware(http_middleware_handler.CustomHttpMiddleware)
+# app.add_middleware(http_middleware_handler.CustomHttpMiddleware2)
 # app.add_middleware(BaseHTTPMiddleware)
 # app.add_middleware(BaseHTTPMiddlewareOrigin)
 # app.add_middleware(RequestLoggingMiddleware)
 
-app.router.route_class = CustomAPIRoute
+# app.router.route_class = CustomAPIRoute
 #############################################################
 
 #############################################################

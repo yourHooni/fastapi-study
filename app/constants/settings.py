@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     # app settings
     app_env: Env = Env.DEV
-    debug: bool = False
+    app_debug: bool = False
     app_name: str = ""
     app_version: float = 0.00
     app_docs_url: str = "/docs"
@@ -50,7 +50,7 @@ class Settings(BaseSettings):
         ]
 
     def __post_init__(self):
-        self.debug = self.app_env in (Env.DEV, Env.STAGING)
+        self.app_debug = self.app_env in (Env.DEV, Env.STAGING)
 
 
 @lru_cache()
