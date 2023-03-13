@@ -20,7 +20,7 @@ class CustomHttpMiddleware(BaseHTTPMiddleware):
     ) -> Response:
         print("1")
         response = await call_next(request)
-        response.headers['Custom1'] = 'Example'
+        response.headers["Custom1"] = "Example"
         return response
 
 
@@ -30,5 +30,5 @@ class CustomHttpMiddleware2(BaseHTTPMiddleware):
     ) -> Response:
         print("2")
         response = await call_next(request)
-        response.headers['Custom2'] = 'Example2'
+        response.headers["Custom2"] = "Example2"
         return response

@@ -35,6 +35,4 @@ class CustomHttpMiddleware(BaseHTTPMiddleware):
 
             # 로그
 
-            return JSONResponse(
-            )
-
+            return JSONResponse()

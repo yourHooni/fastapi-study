@@ -12,6 +12,7 @@ from app.constants.settings import settings
 from app.loggers import sentry_handler
 from app.constants.response import ExceptionCode
 from app.core.custom_exception import CustomException
+from app.core.route_handler import CustomAPIRoute
 
 
 #############################################################
@@ -43,9 +44,9 @@ app.add_middleware(http_middleware_handler.CustomHttpMiddleware2)
 sentry_handler.init_sentry()
 # app.add_middleware(BaseHTTPMiddleware)
 # app.add_middleware(BaseHTTPMiddlewareOrigin)
-app.add_middleware(RequestLoggingMiddleware)
+# app.add_middleware(RequestLoggingMiddleware)
 
-
+app.router.route_class = CustomAPIRoute
 #############################################################
 
 #############################################################
