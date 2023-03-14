@@ -7,6 +7,18 @@ from dataclasses import dataclass
 from app.constants.custom_class import CustomEnum
 
 
+class HttpMethod(CustomEnum):
+    """HTTP Method types"""
+    GET = "GET"
+    POST = "POST"
+    PUT = "PUT"
+    PATCH = "PATCH"
+    DELETE = "DELETE"
+    HEAD = "HEAD"
+    TRACE = "TRACE"
+    OPTIONS = "OPTIONS"
+    CONNECT = "CONNECT"
+
 class StatusCode(CustomEnum):
     """status code"""
 

@@ -4,8 +4,8 @@ from typing import Union
 from fastapi import APIRouter, BackgroundTasks
 
 from app.core.custom_exception import CustomException
-from app.constants.response import ExceptionCode
-from app.core.route_handler import CustomAPIRoute
+from app.constants.request import ExceptionCode
+from app.core.route import CustomAPIRoute
 
 
 test_router = APIRouter(route_class=CustomAPIRoute)
